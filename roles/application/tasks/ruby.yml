@@ -1,0 +1,31 @@
+%YAML 1.2
+---
+- name: Add build dependencies
+  apt: pkg=$item state=latest install_recommends=no
+  with_items:
+    - build-essential
+    - libcurl4-openssl-dev
+    - libreadline-gplv2-dev
+    - libssl-dev
+    - libxml2-dev
+    - libxslt1-dev
+    - zlib1g-dev
+  sudo: yes
+
+- name: Download Ruby 2.0.0-p247
+  get_url: url=ftp://ftp.ruby-lang.org/pub/ruby/2.0/ruby-2.0.0-p247.tar.gz dest=/tmp/ruby.tar.gz
+
+- name: Decompressing Ruby
+  command: tar -xvzf ruby.tar.gz chdir=/tmp/ creates=/tmp/ruby-2.0.0-p247
+
+- name: Installing Ruby
+  command: "{{item}} chdir=/tmp/ruby-2.0.0-p247 creates=/usr/local/include/ruby-2.0.0/ruby"
+  with_items:
+    - ./configure
+    - make
+    - make install
+  sudo: yes
+
+- name: Installing Bundler
+  gem: name=bundler state=present
+  sudo: yes

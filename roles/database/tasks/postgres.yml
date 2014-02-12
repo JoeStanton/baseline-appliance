@@ -1,0 +1,21 @@
+%YAML 1.2
+---
+- name: Install PostgreSQL
+  apt: pkg={{item}} state=present
+  with_items: 
+    - postgresql
+    - libpq-dev
+    - python-psycopg2
+  tags: postgres
+  sudo: yes
+
+- name: Install PostgreSQL Admin Tools
+  apt: pkg=pgadmin3 state=present
+  tags: postgres
+  sudo: yes
+
+- name: Add the application user to PostgreSQL
+  postgresql_user: user=lighthouse-admin password=password role_attr_flags=CREATEDB
+  tags: postgres
+  sudo: yes
+  sudo_user: postgres

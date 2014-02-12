@@ -1,0 +1,4 @@
+%YAML 1.2
+---
+- include: nginx.yml
+- include: ruby.yml

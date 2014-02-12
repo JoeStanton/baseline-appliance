@@ -1,0 +1,53 @@
+%YAML 1.2
+---
+- name: Install Dependencies 
+  apt: pkg={{item}}
+  with_items:
+    - python-software-properties
+    - software-properties-common
+    - python-pycurl
+  sudo: yes
+  tags: nginx
+
+- name: Add Nginx Repository
+  apt_repository: repo=ppa:nginx/stable
+  sudo: yes
+  tags: nginx
+
+- name: Install Nginx
+  apt: pkg=nginx
+  sudo: yes
+  tags: nginx
+
+- name: Create nginx user
+  user: name=nginx
+  sudo: yes
+  tags: nginx
+
+- name: Delete packaged Nginx config
+  command: rm -rf {{item}}
+  with_items: 
+    - /etc/nginx/sites-enabled
+    - /etc/nginx/sites-available
+  sudo: yes
+  tags: nginx
+
+- name: Create Self-Signed SSL Cert
+  command: openssl req -new -nodes -x509 -subj "/C=UK/CN={{ansible_fqdn}}" -days 3650 -keyout /etc/nginx/ssl.key -out /etc/nginx/ssl.crt -extensions v3_ca creates=/etc/nginx/ssl.crt
+  sudo: yes
+  tags: nginx
+
+- name: Configure Nginx with a Unicorn backend
+  copy: src=nginx.conf dest=/etc/nginx/conf.d/default.conf owner=nginx group=nginx mode=0644
+  sudo: yes
+  tags: nginx
+
+- name: Set /var/www/ permissions
+  file: path=/var/www/ mode=0777 state=directory
+  sudo: yes
+  tags: nginx
+
+- name: Start Nginx
+  action: service name=nginx state=started
+  sudo: yes
+  tags: nginx
