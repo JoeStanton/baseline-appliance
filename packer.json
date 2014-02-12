@@ -1,0 +1,35 @@
+{
+  "variables": {
+    "ssh_name": "lighthouse-admin",
+    "ssh_pass": "password",
+    "hostname": "packer-test"
+  },
+  "builders": [{
+    "type": "virtualbox-iso",
+    "ssh_username": "{{user `ssh_name`}}",
+    "ssh_password": "{{user `ssh_pass`}}",
+    "guest_os_type": "Ubuntu_64",
+    "http_directory": "http",
+    "iso_url": "http://releases.ubuntu.com/precise/ubuntu-12.04.4-server-amd64.iso",
+    "iso_checksum": "e83adb9af4ec0a039e6a5c6e145a34de",
+    "iso_checksum_type": "md5",
+    "shutdown_command": "echo {{user `ssh_pass`}} | sudo -S shutdown -P now",
+    "boot_command" : [
+        "<esc><esc><enter><wait>",
+        "/install/vmlinuz noapic ",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+        "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
+        "hostname={{user `hostname`}} ",
+        "fb=false debconf/frontend=noninteractive ",
+        "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
+        "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+        "initrd=/install/initrd.gz -- <enter>"
+    ]
+  }],
+  "provisioners": [
+    {
+      "type": "ansible-local",
+      "playbook_file": "playbook.yml"
+    }
+  ]
+}
