@@ -1,5 +1,14 @@
 ---
 
+- name: Add graphite user
+  user: name=graphite
+  tags: graphite
+  sudo: true
+
+- copy: src=graphite-requirements.txt dest=/tmp/requirements.txt
+  tags: graphite
+  sudo: true
+
 - name: Install Graphite Dependencies
   apt: "pkg={{ item }} state=present"
   with_items:
