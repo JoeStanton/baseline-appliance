@@ -28,6 +28,15 @@
   }],
   "provisioners": [
     {
+      "type": "shell",
+      "inline": [
+        "sleep 30",
+        "sudo add-apt-repository ppa:rquillo/ansible",
+        "sudo apt-get update",
+        "sudo apt-get install ansible"
+      ]
+    },
+    {
       "type": "ansible-local",
       "playbook_file": "playbook.yml"
     }

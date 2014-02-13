@@ -2,3 +2,4 @@
 ---
 - include: statsd.yml
 - include: collectd.yml version=5.4.0
+- include: graphite.yml

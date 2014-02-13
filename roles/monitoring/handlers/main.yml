@@ -7,3 +7,7 @@
 - name: restart collectd
   service: name=collectd state=restarted
   sudo: true
+
+- name: restart graphite
+  service: name=graphite state=restarted
+  sudo: true
