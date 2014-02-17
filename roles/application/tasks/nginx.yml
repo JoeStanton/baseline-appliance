@@ -15,7 +15,7 @@
   tags: nginx
 
 - name: Install Nginx
-  apt: pkg=nginx
+  apt: pkg=nginx-full
   sudo: yes
   tags: nginx
 
