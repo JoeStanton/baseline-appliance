@@ -48,6 +48,6 @@
   tags: nginx
 
 - name: Start Nginx
-  action: service name=nginx state=started
+  action: service name=nginx state=restarted
   sudo: yes
   tags: nginx
