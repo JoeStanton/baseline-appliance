@@ -1,0 +1,49 @@
+%YAML 1.2
+---
+- name: Set permissions
+  file: path=/var/www/ mode=0777
+  sudo: yes
+  tags: api
+
+- name: Set log permissions
+  file: path=/var/log/lighthouse-api.log mode=0777 state=touch
+  sudo: yes
+  tags: api
+
+- name: Clone lighthouse-api Repo
+  git: repo=https://github.com/joestanton/lighthouse-api
+       dest=/var/www/lighthouse-api
+  tags: api
+
+- name: Configuring upstart
+  copy: src=lighthouse-api.upstart dest=/etc/init/lighthouse-api.conf mode=0755
+  sudo: yes
+  tags: api
+
+- name: Install Bundler
+  shell: gem install bundler
+  sudo: yes
+  tags: api
+
+- name: Bundle Install
+  shell: bundle install
+       chdir=/var/www/lighthouse-api
+  sudo: yes
+  tags: api
+
+- name: Creating Database
+  shell: rake db:create RAILS_ENV=production
+       chdir=/var/www/lighthouse-api
+  sudo: yes
+  tags: api
+
+- name: Running Migrations
+  shell: rake db:migrate RAILS_ENV=production
+       chdir=/var/www/lighthouse-api
+  sudo: yes
+  tags: api
+
+- name: Restart API
+  service: name=lighthouse-api state=restarted
+  sudo: yes
+  tags: api

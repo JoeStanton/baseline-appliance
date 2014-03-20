@@ -1,0 +1,14 @@
+%YAML 1.2
+---
+- name: Download Riemann as .deb
+  get_url: url=http://aphyr.com/riemann/riemann_0.2.4_all.deb dest=/root/riemann.deb
+  sudo: yes
+
+- name: Install Riemann
+  command: dpkg -i /root/riemann.deb
+  sudo: yes
+
+- name: restart riemann
+  service: name=riemann
+           state=reloaded
+           enabled=yes

@@ -15,7 +15,13 @@
   sudo: yes
 
 - name: Add the application user to PostgreSQL
-  postgresql_user: user=lighthouse-admin password=password role_attr_flags=CREATEDB
+  postgresql_user: user=lighthouse password=notasecret role_attr_flags=CREATEDB
+  tags: postgres
+  sudo: yes
+  sudo_user: postgres
+
+- name: Set locales
+  script: setup_postgres.sh
   tags: postgres
   sudo: yes
   sudo_user: postgres

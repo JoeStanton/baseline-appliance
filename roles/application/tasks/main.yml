@@ -2,3 +2,4 @@
 ---
 - include: nginx.yml
 - include: ruby.yml
+- include: lighthouse-api.yml

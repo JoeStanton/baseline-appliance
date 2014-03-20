@@ -1,6 +1,7 @@
 %YAML 1.2
 ---
 - include: node.yml version=0.10.21
+  tags: statsd
 
 - name: Install StatsD
   git: repo=https://github.com/etsy/statsd.git dest=/usr/share/statsd
@@ -25,3 +26,4 @@
   notify:
     - restart statsd
   tags: statsd
+

@@ -1,0 +1,4 @@
+start on startup
+respawn
+
+exec su - vagrant -c 'cd /var/www/lighthouse-api; export PORT=3000; RAILS_ENV=production rails server >> /var/log/lighthouse-api.log 2>&1'
