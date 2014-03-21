@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 - name: Set permissions
-  file: path=/var/www/ mode=0777
+  file: path=/opt/ mode=0777
   sudo: yes
   tags: api
 
@@ -12,7 +12,7 @@
 
 - name: Clone lighthouse-api Repo
   git: repo=https://github.com/joestanton/lighthouse-api
-       dest=/var/www/lighthouse-api
+       dest=/opt/lighthouse-api
   tags: api
 
 - name: Configuring upstart
@@ -27,19 +27,19 @@
 
 - name: Bundle Install
   shell: bundle install
-       chdir=/var/www/lighthouse-api
+       chdir=/opt/lighthouse-api
   sudo: yes
   tags: api
 
 - name: Creating Database
   shell: rake db:create RAILS_ENV=production
-       chdir=/var/www/lighthouse-api
+       chdir=/opt/lighthouse-api
   sudo: yes
   tags: api
 
 - name: Running Migrations
   shell: rake db:migrate RAILS_ENV=production
-       chdir=/var/www/lighthouse-api
+       chdir=/opt/lighthouse-api
   sudo: yes
   tags: api
 
