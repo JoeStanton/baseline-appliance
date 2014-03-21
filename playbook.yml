@@ -4,5 +4,5 @@
   roles:
     - role: common
     - role: monitoring
-    - role: application
     - role: database
+    - role: application

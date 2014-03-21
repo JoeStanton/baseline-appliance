@@ -1,0 +1,39 @@
+%YAML 1.2
+---
+- name: Set log permissions
+  file: path=/var/log/lighthouse-web.log mode=0777 state=touch
+  sudo: yes
+  tags: web
+
+- name: Clone lighthouse-web repo
+  git: repo=git@github.com:JoeStanton/lighthouse-web.git
+       dest=/opt/lighthouse-web
+       accept_hostkey=yes
+  tags: web
+
+- name: Set permissions
+  shell: chmod -R 777 .
+        chdir=/opt/lighthouse-web
+  sudo: yes
+  tags: web
+
+- name: Install Grunt
+  shell: npm install grunt-cli -g
+  sudo: yes
+  tags: web
+
+- name: Install Gems
+  shell: gem install sass compass
+  sudo: yes
+  tags: web
+
+- name: NPM Install
+  shell: npm install
+         chdir=/opt/lighthouse-web
+  sudo: yes
+  tags: web
+
+- name: Build frontend
+  shell: grunt
+         chdir=/opt/lighthouse-web
+  tags: web

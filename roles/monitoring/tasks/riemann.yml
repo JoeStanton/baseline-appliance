@@ -56,6 +56,11 @@
   tags: riemann
   sudo: yes
 
+- name: Set log permissions
+  file: path=/var/log/riemann.log mode=0777 state=touch
+  sudo: yes
+  tags: riemann
+
 - name: restart riemann
   service: name=riemann
            state=reloaded
