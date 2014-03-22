@@ -58,7 +58,7 @@
   sudo: yes
 
 - name: Set log permissions
-  file: path=/var/log/riemann.log mode=0777 state=touch
+  file: path=/var/log/riemann/riemann.log mode=0777 state=touch
   sudo: yes
   tags: riemann
 
