@@ -16,7 +16,7 @@
   tags: api
 
 - name: Configuring upstart
-  copy: src=lighthouse-api.upstart dest=/etc/init/lighthouse-api.conf mode=0755
+  template: src=lighthouse-api.upstart.j2 dest=/etc/init/lighthouse-api.conf mode=0755
   sudo: yes
   tags: api
 

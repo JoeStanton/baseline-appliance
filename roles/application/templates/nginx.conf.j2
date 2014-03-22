@@ -1,3 +1,5 @@
+server_names_hash_bucket_size 128;
+
 server {
   listen 80;
   rewrite ^(.*) https://$host$1 permanent;
@@ -5,7 +7,7 @@ server {
 
 server {
   listen 443;
-  server_name lighthouse.local;
+  server_name {{web_server}};
 
   ssl on;
   ssl_certificate /etc/nginx/ssl.crt;
@@ -19,7 +21,7 @@ server {
 
 server {
   listen 443;
-  server_name api.lighthouse.local;
+  server_name {{api_server}};
 
   ssl on;
   ssl_certificate /etc/nginx/ssl.crt;

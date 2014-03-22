@@ -17,8 +17,8 @@
   sudo: yes
   tags: web
 
-- name: Install Grunt
-  shell: npm install grunt-cli -g
+- name: Install Gulp
+  shell: npm install gulp -g
   sudo: yes
   tags: web
 
@@ -34,6 +34,6 @@
   tags: web
 
 - name: Build frontend
-  shell: grunt
+  shell: API=https://{{api_server}} NODE_ENV={{env}} gulp
          chdir=/opt/lighthouse-web
   tags: web
