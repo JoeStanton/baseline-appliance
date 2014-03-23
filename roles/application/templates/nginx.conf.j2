@@ -10,8 +10,8 @@ server {
   server_name {{web_server}};
 
   ssl on;
-  ssl_certificate /etc/nginx/ssl.crt;
-  ssl_certificate_key /etc/nginx/ssl.key;
+  ssl_certificate /etc/nginx/monitoring.crt;
+  ssl_certificate_key /etc/nginx/monitoring.key;
 
   location / {
     root /opt/lighthouse-web;
@@ -24,8 +24,8 @@ server {
   server_name {{api_server}};
 
   ssl on;
-  ssl_certificate /etc/nginx/ssl.crt;
-  ssl_certificate_key /etc/nginx/ssl.key;
+  ssl_certificate /etc/nginx/monitoring-api.crt;
+  ssl_certificate_key /etc/nginx/monitoring-api.key;
 
   location / {
     proxy_pass http://127.0.0.1:3000;
