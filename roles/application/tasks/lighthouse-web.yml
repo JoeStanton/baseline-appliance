@@ -22,8 +22,9 @@
   sudo: yes
   tags: web
 
-- name: Install Gems
-  shell: gem install sass compass
+- name: Bundle install
+  shell: bundle install
+        chdir=/opt/lighthouse-web
   sudo: yes
   tags: web
 
