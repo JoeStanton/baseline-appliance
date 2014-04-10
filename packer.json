@@ -1,6 +1,6 @@
 {
   "variables": {
-    "ssh_name": "lighthouse-admin",
+    "ssh_name": "baseline-admin",
     "ssh_pass": "password",
     "hostname": "packer-test"
   },

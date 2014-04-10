@@ -1,23 +1,23 @@
 %YAML 1.2
 ---
-- name: Install Dependencies
-  apt: pkg={{item}}
-  with_items:
-    - python-software-properties
-    - software-properties-common
-    - python-pycurl
-  sudo: yes
-  tags: nginx
+#- name: Install Dependencies
+  #apt: pkg={{item}}
+  #with_items:
+    #- python-software-properties
+    #- software-properties-common
+    #- python-pycurl
+  #sudo: yes
+  #tags: nginx
 
 - name: Add Nginx Repository
   apt_repository: repo=ppa:nginx/stable
   sudo: yes
   tags: nginx
 
-- name: Install Nginx
-  apt: pkg=nginx-full
-  sudo: yes
-  tags: nginx
+#- name: Install Nginx
+  #apt: pkg=nginx-full
+  #sudo: yes
+  #tags: nginx
 
 - name: Create nginx user
   user: name=nginx

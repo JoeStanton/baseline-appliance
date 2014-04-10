@@ -1,19 +1,19 @@
 %YAML 1.2
 ---
 - name: Set log permissions
-  file: path=/var/log/lighthouse-web.log mode=0777 state=touch
+  file: path=/var/log/baseline-web.log mode=0777 state=touch
   sudo: yes
   tags: web
 
-- name: Clone lighthouse-web repo
-  git: repo=git@github.com:JoeStanton/lighthouse-web.git
-       dest=/opt/lighthouse-web
+- name: Clone baseline-web repo
+  git: repo=git@github.com:JoeStanton/baseline-web.git
+       dest=/opt/baseline-web
        accept_hostkey=yes
   tags: web
 
 - name: Set permissions
   shell: chmod -R 777 .
-        chdir=/opt/lighthouse-web
+        chdir=/opt/baseline-web
   sudo: yes
   tags: web
 
@@ -24,17 +24,17 @@
 
 - name: Bundle install
   shell: bundle install
-        chdir=/opt/lighthouse-web
+        chdir=/opt/baseline-web
   sudo: yes
   tags: web
 
 - name: NPM Install
   shell: npm install
-         chdir=/opt/lighthouse-web
+         chdir=/opt/baseline-web
   sudo: yes
   tags: web
 
 - name: Build frontend
-  shell: API=https://{{api_server}} NODE_ENV={{env}} gulp
-         chdir=/opt/lighthouse-web
+  shell: API=https://{{api_server}} NODE_ENV={{env}} gulp browserify
+         chdir=/opt/baseline-web
   tags: web

@@ -15,7 +15,7 @@
   sudo: yes
 
 - name: Add the application user to PostgreSQL
-  postgresql_user: user=lighthouse password=notasecret role_attr_flags=CREATEDB
+  postgresql_user: user=baseline password=notasecret role_attr_flags=CREATEDB
   tags: postgres
   sudo: yes
   sudo_user: postgres

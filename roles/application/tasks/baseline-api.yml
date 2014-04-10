@@ -6,17 +6,17 @@
   tags: api
 
 - name: Set log permissions
-  file: path=/var/log/lighthouse-api.log mode=0777 state=touch
+  file: path=/var/log/baseline-api.log mode=0777 state=touch
   sudo: yes
   tags: api
 
-- name: Clone lighthouse-api Repo
-  git: repo=https://github.com/joestanton/lighthouse-api
-       dest=/opt/lighthouse-api
+- name: Clone baseline-api Repo
+  git: repo=https://github.com/joestanton/baseline-api
+       dest=/opt/baseline-api
   tags: api
 
 - name: Configuring upstart
-  template: src=lighthouse-api.upstart.j2 dest=/etc/init/lighthouse-api.conf mode=0755
+  template: src=baseline-api.upstart.j2 dest=/etc/init/baseline-api.conf mode=0755
   sudo: yes
   tags: api
 
@@ -27,23 +27,23 @@
 
 - name: Bundle Install
   shell: bundle install
-       chdir=/opt/lighthouse-api
+       chdir=/opt/baseline-api
   sudo: yes
   tags: api
 
 - name: Creating Database
   shell: rake db:create RAILS_ENV=production
-       chdir=/opt/lighthouse-api
+       chdir=/opt/baseline-api
   sudo: yes
   tags: api
 
 - name: Running Migrations
   shell: rake db:migrate RAILS_ENV=production
-       chdir=/opt/lighthouse-api
+       chdir=/opt/baseline-api
   sudo: yes
   tags: api
 
 - name: Restart API
-  service: name=lighthouse-api state=restarted
+  service: name=baseline-api state=restarted
   sudo: yes
   tags: api

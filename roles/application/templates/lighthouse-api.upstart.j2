@@ -1,4 +1,4 @@
 start on startup
 respawn
 
-exec su - {{user}} -c 'cd /opt/lighthouse-api; export PORT=3000; export RAILS_ENV=production; rails server >> /var/log/lighthouse-api.log'
+exec su - {{user}} -c 'cd /opt/baseline-api; export PORT=3000; export RAILS_ENV=production; rails server >> /var/log/baseline-api.log'
