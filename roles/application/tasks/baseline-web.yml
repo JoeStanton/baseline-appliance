@@ -6,9 +6,8 @@
   tags: web
 
 - name: Clone baseline-web repo
-  git: repo=git@github.com:JoeStanton/baseline-web.git
+  git: repo=https://github.com/joestanton/baseline-web
        dest=/opt/baseline-web
-       accept_hostkey=yes
   tags: web
 
 - name: Set permissions
@@ -35,6 +34,6 @@
   tags: web
 
 - name: Build frontend
-  shell: API=https://{{api_server}} NODE_ENV={{env}} gulp browserify
+  shell: API=https://{{api_server}} NODE_ENV={{env}} gulp
          chdir=/opt/baseline-web
   tags: web

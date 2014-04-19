@@ -13,32 +13,37 @@
     "iso_url": "http://releases.ubuntu.com/precise/ubuntu-12.04.4-server-amd64.iso",
     "iso_checksum": "e83adb9af4ec0a039e6a5c6e145a34de",
     "iso_checksum_type": "md5",
-    "shutdown_command": "echo {{user `ssh_pass`}} | sudo -S shutdown -P now",
+    "shutdown_command": "echo password | sudo -S shutdown -P now",
     "boot_command" : [
-        "<esc><esc><enter><wait>",
-        "/install/vmlinuz noapic ",
-        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
-        "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
-        "hostname={{user `hostname`}} ",
-        "fb=false debconf/frontend=noninteractive ",
-        "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
-        "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
-        "initrd=/install/initrd.gz -- <enter>"
+      "<esc><esc><enter><wait>",
+      "/install/vmlinuz noapic ",
+      "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+      "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
+      "hostname={{user `hostname`}} ",
+      "fb=false debconf/frontend=noninteractive ",
+      "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
+      "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+      "initrd=/install/initrd.gz -- <enter>"
     ]
   }],
   "provisioners": [
     {
-      "type": "shell",
-      "inline": [
-        "sleep 30",
-        "sudo add-apt-repository ppa:rquillo/ansible",
-        "sudo apt-get update",
-        "sudo apt-get install ansible"
-      ]
-    },
-    {
-      "type": "ansible-local",
-      "playbook_file": "playbook.yml"
-    }
+    "type": "shell",
+    "execute_command": "echo 'password' | {{.Vars}} sudo -E -S sh '{{.Path}}'",
+    "inline": [
+      "sleep 10",
+      "sudo add-apt-repository ppa:rquillo/ansible -y",
+      "sudo apt-get update -y",
+      "sudo apt-get install -y ansible"
+    ]
+  },
+  {
+    "type": "ansible-local",
+    "playbook_file": "playbook.yml",
+    "role_paths": ["roles/common", "roles/application", "roles/database", "roles/monitoring"],
+    "extra_arguments": [
+      "--extra-vars=\"ansible_sudo_pass=password user=baseline-admin env=development web_server=baseline.local api_server=baseline-api.local\""
+    ]
+  }
   ]
 }

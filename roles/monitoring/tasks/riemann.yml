@@ -43,9 +43,20 @@
   sudo: yes
   tags: riemann
 
+- name: Remove old initv script
+  file: path=/etc/init.d/riemann state=absent
+  tags: riemann
+  sudo: yes
+
+- name: Configure Riemann upstart script
+  template: src=riemann.upstart.j2 dest=/etc/init/riemann.conf
+  tags: riemann
+  sudo: yes
+
 - name: Clone Baseline
   git: repo=https://github.com/joestanton/baseline dest=/opt/baseline
   tags: riemann
+  sudo: yes
 
 - name: Remove default riemann config
   file: path=/etc/riemann/riemann.config state=absent

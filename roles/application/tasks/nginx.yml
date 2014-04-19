@@ -1,44 +1,26 @@
 %YAML 1.2
 ---
-#- name: Install Dependencies
-  #apt: pkg={{item}}
-  #with_items:
-    #- python-software-properties
-    #- software-properties-common
-    #- python-pycurl
-  #sudo: yes
-  #tags: nginx
+- name: Install Dependencies
+  apt: pkg={{item}}
+  with_items:
+    - python-software-properties
+    - software-properties-common
+    - python-pycurl
+  sudo: yes
+  tags: nginx
 
 - name: Add Nginx Repository
   apt_repository: repo=ppa:nginx/stable
   sudo: yes
   tags: nginx
 
-#- name: Install Nginx
-  #apt: pkg=nginx-full
-  #sudo: yes
-  #tags: nginx
+- name: Install Nginx
+  apt: pkg=nginx-full
+  sudo: yes
+  tags: nginx
 
 - name: Create nginx user
   user: name=nginx
-  sudo: yes
-  tags: nginx
-
-- name: Delete packaged Nginx config
-  command: rm -rf {{item}}
-  with_items: 
-    - /etc/nginx/sites-enabled
-    - /etc/nginx/sites-available
-  sudo: yes
-  tags: nginx
-
-- name: Create Self-Signed SSL Cert (Web)
-  command: openssl req -new -nodes -x509 -subj "/C=UK/CN={{ansible_fqdn}}" -days 3650 -keyout /etc/nginx/monitoring.key -out /etc/nginx/monitoring.crt -extensions v3_ca creates=/etc/nginx/monitoring.crt
-  sudo: yes
-  tags: nginx
-
-- name: Create Self-Signed SSL Cert (API)
-  command: openssl req -new -nodes -x509 -subj "/C=UK/CN={{ansible_fqdn}}" -days 3650 -keyout /etc/nginx/monitoring-api.key -out /etc/nginx/monitoring-api.crt -extensions v3_ca creates=/etc/nginx/monitoring-api.crt
   sudo: yes
   tags: nginx
 
